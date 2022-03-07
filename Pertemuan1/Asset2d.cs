@@ -13,9 +13,9 @@ namespace Pertemuan1
         float[] _vertices =
         {
             //x     y     z
-            -0.5f, -0.5f, 0.0f,         //vertex 0
-            0.5f,  -0.5f, 0.0f,         //vertex 1
-            0.0f,   0.5f, 0.0f
+            //-0.5f, -0.5f, 0.0f,         //vertex 0
+            //0.5f,  -0.5f, 0.0f,         //vertex 1
+            //0.0f,   0.5f, 0.0f
         };
 
         /*float[] _vertices =
@@ -41,15 +41,21 @@ namespace Pertemuan1
             //1,2,3  //segitia kedua ambil dari vertices baris 1 2 3
         };
 
+        float[] _color =
+        {
+            1.0f, 0.0f, 0.0f, 0.0f
+        };
+
         int _vertexBufferObject;
         int _elementBufferObject;
         int _vertexArrayObject;
         Shader _shader;
 
-        public Asset2d(float[] verticies, uint[] indices)
+        public Asset2d(float[] verticies, uint[] indices, float[] color)
         {
             _vertices = verticies;
             _indices = indices;
+            _color = color;
         }
 
         public void load()
@@ -93,8 +99,10 @@ namespace Pertemuan1
         {
             _shader.Use();
 
-            /*int vertexColorLocation = GL.GetUniformLocation(_shader.Handle, "ourColor");
-            GL.Uniform4(vertexColorLocation, 0.0f, 0.2f, 0.0f, 1.0f);*/
+            int vertexColorLocation = GL.GetUniformLocation(_shader.Handle, "ourColor");
+            //GL.Uniform4(vertexColorLocation, 0.0f, 0.2f, 0.0f, 1.0f);
+            GL.Uniform4(vertexColorLocation, _color[0], _color[1], _color[2], _color[3]);
+
 
             GL.BindVertexArray(_vertexArrayObject);
 

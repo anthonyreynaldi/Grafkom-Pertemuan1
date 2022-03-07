@@ -13,7 +13,7 @@ namespace Pertemuan1
 {
     internal class Window : GameWindow
     {
-        Asset2d[] _object = new Asset2d[2];
+        Asset2d[] _object = new Asset2d[5];
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -23,38 +23,109 @@ namespace Pertemuan1
         {
             base.OnLoad();
             //ganti background warna
-            GL.ClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+            //ketupat tengah
             _object[0] = new Asset2d(
                 new float[]
                 {
-                    -0.75f, 0.0f, 0.0f,
-                    -0.5f, 0.5f, 0.0f,
-                    -0.25f, 0.0f, 0.0f
+                    0.0f, 0.75f, 0.0f,
+                    0.75f, 0.0f, 0.0f,
+                    0.0f, -0.75f, 0.0f,
+                    -0.75f, 0.0f, 0.0f
                 },
                 new uint[]
                 {
-
+                    0, 1, 2,
+                    0, 3, 2
+                },
+                new float[]
+                {
+                    1.0f, 1.0f, 1.0f, 1.0f
                 }
                 
             );
 
+            //segitiga kanan atas
             _object[1] = new Asset2d(
                 new float[]
                 {
-                    0.75f, 0.0f, 0.0f,
-                    0.5f, 0.5f, 0.0f,
-                    0.25f, 0.0f, 0.0f
+                    0.75f, 0.75f, 0.0f,     //siku
+                    0.75f, 0.25f, 0.0f,
+                    0.25f, 0.75f, 0.0f
                 },
                 new uint[]
                 {
 
+                },
+                new float[]
+                {
+                    0.0f, 0.0f, 1.0f, 1.0f
                 }
 
             );
 
-            _object[0].load();
-            _object[1].load();
+            //segitiga kanan bawah --> semua y jadi -
+            _object[2] = new Asset2d(
+                new float[]
+                {
+                    0.75f, -0.75f, 0.0f,     //siku
+                    0.75f, -0.25f, 0.0f,
+                    0.25f, -0.75f, 0.0f
+                },
+                new uint[]
+                {
+
+                },
+                new float[]
+                {
+                    0.0f, 1.0f, 0.0f, 1.0f
+                }
+
+            );
+
+            //segitiga kiri atas semua x jadi -
+            _object[3] = new Asset2d(
+                new float[]
+                {
+                    -0.75f, 0.75f, 0.0f,     //siku
+                    -0.75f, 0.25f, 0.0f,
+                    -0.25f, 0.75f, 0.0f
+                },
+                new uint[]
+                {
+
+                },
+                new float[]
+                {
+                    1.0f, 1.0f, 0.0f, 1.0f
+                }
+
+            );
+
+            //segitiga kiri bawah semua x dan y jadi -
+            _object[4] = new Asset2d(
+                new float[]
+                {
+                    -0.75f, -0.75f, 0.0f,     //siku
+                    -0.75f, -0.25f, 0.0f,
+                    -0.25f, -0.75f, 0.0f
+                },
+                new uint[]
+                {
+
+                },
+                new float[]
+                {
+                    1.0f, 0.0f, 0.0f, 1.0f
+                }
+
+            );
+
+            for (int i = 0; i < _object.Length; i++)
+            {
+                _object[i].load();
+            }
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAtrributeCount);
             Console.WriteLine($"Maximum number of " + $"vertex attributes supported: {maxAtrributeCount}");
@@ -66,8 +137,10 @@ namespace Pertemuan1
             base.OnRenderFrame(args);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            _object[0].render();
-            _object[1].render();
+            for (int i = 0; i < _object.Length; i++)
+            {
+                _object[i].render();
+            }
 
             SwapBuffers();
 
