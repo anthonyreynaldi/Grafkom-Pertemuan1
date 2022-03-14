@@ -30,13 +30,13 @@ namespace Pertemuan1
         public void load(string shadervert = "../../../Shaders/shader.vert", string shaderfrag = "../../../Shaders/shader.frag")
         {
             //inisialisasi generate buffer
-            _vertexBufferObject = GL.GenBuffer();               //menyimpan vertex bisa warna, texture dll untuk dikirim ke GPU (cuman dikirim)
+            _vertexBufferObject = GL.GenBuffer();
             
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
             GL.BufferData(BufferTarget.ArrayBuffer, _vertices.Count * Vector3.SizeInBytes,
                 _vertices.ToArray(), BufferUsageHint.StaticDraw);
 
-            _vertexArrayObject = GL.GenVertexArray();           //kasih tau GPU dibaginya datanya kek gmn
+            _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
            
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);

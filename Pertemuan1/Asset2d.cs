@@ -11,13 +11,7 @@ namespace Pertemuan1
 {
     internal class Asset2d
     {
-        float[] _vertices =
-        {
-            //x     y     z
-            //-0.5f, -0.5f, 0.0f,         //vertex 0
-            //0.5f,  -0.5f, 0.0f,         //vertex 1
-            //0.0f,   0.5f, 0.0f
-        };
+        float[] _vertices ={ };
 
         /*float[] _vertices =
         {
@@ -36,11 +30,7 @@ namespace Pertemuan1
             -0.5f,  0.5f, 0.0f           //top L
         };*/
 
-        uint[] _indices =
-        {
-            //0,1,3, //segitiga pertama ambil dari vertices baris 0 1 3
-            //1,2,3  //segitia kedua ambil dari vertices baris 1 2 3
-        };
+        uint[] _indices = { };
 
         float[] _color =
         {
