@@ -11,9 +11,14 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Pertemuan1
 {
+    static class Constants
+    {
+        public const string path = "../../../Shaders/";
+    }
+
     internal class Window : GameWindow
     {
-        Asset2d[] _object = new Asset2d[5];
+        Asset2d[] _object = new Asset2d[8];
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -122,9 +127,27 @@ namespace Pertemuan1
 
             );
 
+            _object[5] = new Asset2d(
+                new float[] {},
+                new uint[] {}
+                );
+            _object[5].createEllips(0.0f, -0.5f, 0.25f, 0.5f);
+
+
+            _object[6] = new Asset2d(
+                new float[1080],
+                new uint[] { }
+                );
+
+            _object[7] = new Asset2d(
+               new float[] { },
+               new uint[] { }
+               );
+
+            //load all
             for (int i = 0; i < _object.Length; i++)
             {
-                _object[i].load();
+                _object[i].load(Constants.path + "shader.vert", Constants.path + "shader.frag");
             }
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAtrributeCount);
@@ -137,10 +160,22 @@ namespace Pertemuan1
             base.OnRenderFrame(args);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            for (int i = 0; i < _object.Length; i++)
+            //all render
+            for (int i = 0; i < _object.Length-2; i++)
             {
                 _object[i].render();
             }
+
+            _object[5].render("circle");
+            
+            if (_object[6].getVerticesLength())
+            {
+                List<float> _verticesTemp = _object[6].createCureveBezier();
+                _object[7].setvertices(_verticesTemp.ToArray());
+                _object[7].load(Constants.path + "shader.vert", Constants.path + "shader.frag");
+                _object[7].render("lineBezier");
+            }
+            _object[6].render("line");
 
             SwapBuffers();
 
@@ -164,6 +199,20 @@ namespace Pertemuan1
             if (input.IsKeyDown(Keys.Escape))
             {
                 Close();
+            }
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if(e.Button == MouseButton.Left)
+            {
+                float _x = (MousePosition.X - Size.X/2) / (Size.X/2);
+                float _y = -(MousePosition.Y - Size.Y/2) / (Size.Y/2);
+
+                Console.WriteLine(_x + " " + _y);
+
+                _object[6].updateMousePosition(_x, _y);
             }
         }
     }
