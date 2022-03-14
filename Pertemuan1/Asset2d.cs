@@ -68,7 +68,7 @@ namespace Pertemuan1
             _color = color;
         }
 
-        public void load(string shadervert, string shaderfrag)
+        public void load(string shadervert = "../../../Shaders/shader.vert", string shaderfrag = "../../../Shaders/shader.frag")
         {
             //inisialisasi generate buffer
             _vertexBufferObject = GL.GenBuffer();               //menyimpan vertex bisa warna, texture dll untuk dikirim ke GPU (cuman dikirim)

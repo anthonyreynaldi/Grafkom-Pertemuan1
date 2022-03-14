@@ -8,6 +8,7 @@ using LearnOpenTK.Common;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Mathematics;
 
 namespace Pertemuan1
 {
@@ -19,6 +20,7 @@ namespace Pertemuan1
     internal class Window : GameWindow
     {
         Asset2d[] _object = new Asset2d[8];
+        List<Asset3d> _objectList = new List<Asset3d>();
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -30,6 +32,7 @@ namespace Pertemuan1
             //ganti background warna
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+            /*
             //ketupat tengah
             _object[0] = new Asset2d(
                 new float[]
@@ -149,9 +152,16 @@ namespace Pertemuan1
             {
                 _object[i].load(Constants.path + "shader.vert", Constants.path + "shader.frag");
             }
+            */
 
-            GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAtrributeCount);
-            Console.WriteLine($"Maximum number of " + $"vertex attributes supported: {maxAtrributeCount}");
+            var ellipsoid1 = new Asset3d(new Vector3(0, 0.5f, 1));
+            ellipsoid1.createEllipsoid(0, 0, 0, 0.4f, 0.4f, 0.4f);
+            _objectList.Add(ellipsoid1);
+
+            foreach(Asset3d i in _objectList)
+            {
+                i.load();
+            }
 
         }
 
@@ -160,6 +170,7 @@ namespace Pertemuan1
             base.OnRenderFrame(args);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
+            /*
             //all render
             for (int i = 0; i < _object.Length-2; i++)
             {
@@ -176,6 +187,12 @@ namespace Pertemuan1
                 _object[7].render("lineBezier");
             }
             _object[6].render("line");
+            */
+
+            foreach (Asset3d i in _objectList)
+            {
+                i.render();
+            }
 
             SwapBuffers();
 
@@ -201,7 +218,7 @@ namespace Pertemuan1
                 Close();
             }
         }
-
+        /*
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
@@ -215,5 +232,6 @@ namespace Pertemuan1
                 _object[6].updateMousePosition(_x, _y);
             }
         }
+        */
     }
 }
