@@ -43,12 +43,16 @@ namespace Pertemuan1
             //ellipsoid1.createEllipsoid(0, 0, 0, 0.4f, 0.4f, 0.4f);
             //_objectList.Add(ellipsoid1);
 
-            var box = new Asset3d(new Vector3(0, 0.5f, 1));
-            box.createBoxVertices(0, 0, 0);
-            _objectList.Add(box);
+            var ellipsoid1 = new Asset3d(new Vector3(0, 0.5f, 1));
+            ellipsoid1.createElipticParaboloid(0, 0, -0.5f, 0.1f, 0.4f, 0.4f);
+            _objectList.Add(ellipsoid1);
+
+            /* var box = new Asset3d(new Vector3(0, 0.5f, 1));
+             box.createBoxVertices(0, 0, 0);
+             _objectList.Add(box);*/
 
 
-            foreach(Asset3d i in _objectList)
+            foreach (Asset3d i in _objectList)
             {
                 i.load(Size.X, Size.Y);
             }
@@ -66,7 +70,9 @@ namespace Pertemuan1
             var temp = Matrix4.Identity;
 
             //rotation by degree
-            //degr += MathHelper.DegreesToRadians(0.1f);       //muter 20 derajat
+            degr += MathHelper.DegreesToRadians(-0.1f);       //muter 20 derajat
+            //temp = temp * Matrix4.CreateRotationZ(degr);
+            temp = temp * Matrix4.CreateRotationX(degr);
             //temp = temp * Matrix4.CreateRotationY(degr);
 
             //custom rotate
@@ -75,7 +81,7 @@ namespace Pertemuan1
             foreach (Asset3d i in _objectList)
             {
                 //         pusat rotasi                  sumbu putar derajat
-                i.rotate(new Vector3(0.0f, 0.5f, 0.0f), i._euler[0], 0.5f);
+                //i.rotate2(new Vector3(0.0f, 0.5f, 0.0f), i._euler[0], 0.5f);
                 i.render(_time, temp);
             }
 

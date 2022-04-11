@@ -307,6 +307,7 @@ namespace Pertemuan1
 
         }
 
+        /*
         public void rotate(Vector3 pivot, Vector3 vector, float angle)
         {
             var radAngle = MathHelper.DegreesToRadians(angle);
@@ -336,6 +337,7 @@ namespace Pertemuan1
                 i.rotate(pivot, vector, angle);
             }
         }
+        */
 
 
         public void rotate2(Vector3 pivot, Vector3 vector, float angle)
@@ -414,6 +416,100 @@ namespace Pertemuan1
             _euler[0] = new Vector3(1, 0, 0);
             _euler[1] = new Vector3(0, 1, 0);
             _euler[2] = new Vector3(0, 0, 1);
+        }
+
+        public void createHyperboloidSatu(float x, float y, float z, float radiusX, float radiusY, float radiusZ)
+        {
+            var tempVertex = new Vector3();
+            for (float u = -MathF.PI; u < MathF.PI; u += MathF.PI / 100.0f)
+            {
+                for (float v = -MathF.PI / 2.0f; v < MathF.PI / 2.0f; v += MathF.PI / 100.0f)
+                {
+                    tempVertex.X = radiusX * 1 / MathF.Cos(v) * MathF.Cos(u) + x;
+                    tempVertex.Y = radiusY * 1 / MathF.Cos(v) * MathF.Sin(u) + y;
+                    tempVertex.Z = radiusZ * MathF.Tan(v) + z;
+                    _vertices.Add(tempVertex);
+                }
+            }
+        }
+        public void createHyperboloidDua(float x, float y, float z, float radiusX, float radiusY, float radiusZ)
+        {
+            var tempVertex = new Vector3();
+            for (float u = -MathF.PI; u < MathF.PI; u += MathF.PI / 100.0f)
+            {
+                for (float v = -MathF.PI / 2.0f; v < MathF.PI / 2.0f; v += MathF.PI / 100.0f)
+                {
+                    tempVertex.X = radiusX * MathF.Tan(v) * MathF.Cos(u) + x;
+                    tempVertex.Y = radiusY * MathF.Tan(v) * MathF.Sin(u) + y;
+                    tempVertex.Z = radiusZ * 1 / MathF.Cos(v) + z;
+                    _vertices.Add(tempVertex);
+                }
+                for (float v = -MathF.PI / 2.0f; v < 3 * MathF.PI / 2.0f; v += MathF.PI / 100.0f)
+                {
+                    tempVertex.X = radiusX * MathF.Tan(v) * MathF.Cos(u) + x;
+                    tempVertex.Y = radiusY * MathF.Tan(v) * MathF.Sin(u) + y;
+                    tempVertex.Z = radiusZ * 1 / MathF.Cos(v) + z;
+                    _vertices.Add(tempVertex);
+                }
+            }
+        }
+
+        public void tabung(float _positionX, float _positionY, float _positionZ, float _radiusx, float _radiusy, float _radiusz)
+        {
+            Vector3 temp_vector; float _pi = (float)Math.PI;
+            for (float v = -20.0f; v <= _pi / 100; v += 0.01f)
+            {
+                for (float u = -20.0f; u <= _pi; u += (_pi / 10))
+                {
+                    temp_vector.X = _positionX + _radiusx * (float)Math.Cos(u); //ganti ke v jadi kumis kucing
+                    temp_vector.Y = _positionY + _radiusy * (float)Math.Sin(u); //ganti ke v jadi kumis kucing
+                    temp_vector.Z = _positionZ + _radiusz * v;
+                    _vertices.Add(temp_vector);
+                }
+            }
+        }
+        public void createElipticCone(float x, float y, float z, float radiusX, float radiusY, float radiusZ)
+        {
+            var tempVertex = new Vector3();
+            for (float u = -MathF.PI; u < MathF.PI; u += MathF.PI / 1000.0f)
+            {
+                for (float v = -10.0f; v < 10.0f; v += 1.0f)
+                {
+                    tempVertex.X = radiusX * v * MathF.Cos(u) + x;
+                    tempVertex.Y = radiusY * v * MathF.Sin(u) + y;
+                    tempVertex.Z = radiusZ * v + z;
+                    _vertices.Add(tempVertex);
+                }
+            }
+        }
+
+        public void createElipticParaboloid(float x, float y, float z, float radiusX, float radiusY, float radiusZ)
+        {
+            var tempVertex = new Vector3();
+            for (float u = -MathF.PI; u < MathF.PI; u += MathF.PI / 100.0f)
+            {
+                for (float v = 0.0f; v < 30.0f; v += 0.1f)
+                {
+                    tempVertex.X = radiusX * v * MathF.Cos(u) + x;
+                    tempVertex.Y = radiusY * v * MathF.Sin(u) + y;
+                    tempVertex.Z = radiusZ * v * v + z;
+                    _vertices.Add(tempVertex);
+                }
+            }
+        }
+        public void createHyperboloidParaboloid(float x, float y, float z, float radiusX, float radiusY, float radiusZ)
+        {
+            var tempVertex = new Vector3();
+            for (float u = -MathF.PI; u < MathF.PI; u += MathF.PI / 100.0f)
+            {
+                for (float v = 0.0f; v < 30.0f; v += 0.1f)
+                {
+                    tempVertex.X = radiusX * v * MathF.Tan(u) + x;
+                    tempVertex.Y = radiusY * v * 1 / MathF.Cos(v) + y;
+                    tempVertex.Z = radiusZ * v * v + z;
+                    _vertices.Add(tempVertex);
+                }
+            }
         }
     }
 }
