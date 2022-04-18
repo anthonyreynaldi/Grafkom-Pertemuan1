@@ -82,7 +82,7 @@ namespace Pertemuan1
 
 
 
-        public void render(double time, Matrix4 temp, string pilihan = "")
+        public void render(double time, Matrix4 temp, Matrix4 camera_view, Matrix4 camera_projection, string pilihan = "")
         {
             _shader.Use();
 
@@ -98,8 +98,8 @@ namespace Pertemuan1
             //model = model * Matrix4.CreateTranslation(0.0f, 1.0f, 0.0f);
 
             _shader.SetMatrix4("model", model);
-            _shader.SetMatrix4("view", _view);
-            _shader.SetMatrix4("projection", _projection);
+            _shader.SetMatrix4("view", camera_view);
+            _shader.SetMatrix4("projection", camera_projection);
 
             GL.BindVertexArray(_vertexArrayObject);
 
