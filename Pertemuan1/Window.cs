@@ -207,6 +207,19 @@ namespace Pertemuan1
             }
         }
         */
+
+        public void rotateCamera(Vector3 axis, Vector3 camRotationCenter, Vector3 lookAt, float rotationSpeed)
+        {
+            _camera.Position -= camRotationCenter;
+            if (axis == Vector3.UnitY)
+            {
+                _camera.Yaw += rotationSpeed;
+            }
+            _camera.Position = Vector3.Transform(_camera.Position, generateArbRotationMatrix(axis, rotationSpeed).ExtractRotation());
+            _camera.Position += camRotationCenter;
+            _camera._front = Vector3.Normalize(lookAt - _camera.Position);
+        }
+
         public Matrix4 generateArbRotationMatrix(Vector3 axis, Vector3 center, float degree)
         {
             var rads = MathHelper.DegreesToRadians(degree);
@@ -226,6 +239,20 @@ namespace Pertemuan1
             );
 
             return secretFormulaMatix;
+        }
+
+        public Matrix4 generateArbRotationMatrix(Vector3 axis, float angle)
+        {
+            angle = MathHelper.DegreesToRadians(angle);
+
+            var arbRotationMatrix = new Matrix4(
+                (float)Math.Cos(angle) + (float)Math.Pow(axis.X, 2) * (1 - (float)Math.Cos(angle)), axis.X * axis.Y * (1 - (float)Math.Cos(angle)) - axis.Z * (float)Math.Sin(angle), axis.X * axis.Z * (1 - (float)Math.Cos(angle)) + axis.Y * (float)Math.Sin(angle), 0,
+                axis.Y * axis.X * (1 - (float)Math.Cos(angle)) + axis.Z * (float)Math.Sin(angle), (float)Math.Cos(angle) + (float)Math.Pow(axis.Y, 2) * (1 - (float)Math.Cos(angle)), axis.Y * axis.Z * (1 - (float)Math.Cos(angle)) - axis.X * (float)Math.Sin(angle), 0,
+                axis.Z * axis.X * (1 - (float)Math.Cos(angle)) - axis.Y * (float)Math.Sin(angle), axis.Z * axis.Y * (1 - (float)Math.Cos(angle)) + axis.X * (float)Math.Sin(angle), (float)Math.Cos(angle) + (float)Math.Pow(axis.Z, 2) * (1 - (float)Math.Cos(angle)), 0,
+                0, 0, 0, 1
+                );
+
+            return arbRotationMatrix;
         }
     }
 }
